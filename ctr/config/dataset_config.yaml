@@ -1,0 +1,155 @@
+amazon_fields: &amazon_fields
+  - {active: true, dtype: str, name: parent_asin, type: categorical}
+  - {active: true, dtype: str, name: user_id, type: categorical}
+  - {active: true, dtype: str, name: timestamp, type: categorical}
+  - {active: true, dtype: str, name: main_category, type: categorical}
+  - {active: true, dtype: str, name: title, type: categorical}
+  - {active: true, dtype: str, name: average_rating, type: categorical}
+  - {active: true, dtype: str, name: rating_number, type: categorical}
+  - {active: true, dtype: str, name: features, type: categorical}
+  - {active: true, dtype: str, name: description, type: categorical}
+  - {active: true, dtype: str, name: price, type: categorical}
+  - {active: true, dtype: str, name: store, type: categorical}
+  - {active: true, dtype: str, name: categories, type: categorical}
+  - {active: true, dtype: str, name: details, type: categorical}
+
+seq_fields: &seq_fields
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: parent_asin}
+
+sidfeat_fields: &sidfeat_fields
+  - {active: true, dtype: str, name: item_sid1, type: categorical}
+  - {active: true, dtype: str, name: item_sid2, type: categorical}
+  - {active: true, dtype: str, name: item_sid3, type: categorical}
+  - {active: true, dtype: str, name: user_sid1, type: categorical}
+  - {active: true, dtype: str, name: user_sid2, type: categorical}
+  - {active: true, dtype: str, name: user_sid3, type: categorical}
+
+sidseq_fields: &sidseq_fields
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: parent_asin}
+  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_id}
+  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid1}
+  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid2}
+  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid3}
+  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid1}
+  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid2}
+  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid3}
+
+gift:
+  data_format: csv
+  data_root: ../data/gift/
+  feature_cols: *amazon_fields
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/gift/train.csv
+  valid_data: ../data/gift/valid.csv
+  test_data: ../data/gift/test.csv
+
+game:
+  data_format: csv
+  data_root: ../data/game/
+  feature_cols: *amazon_fields
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/game/train.csv
+  valid_data: ../data/game/valid.csv
+  test_data: ../data/game/test.csv
+
+music:
+  data_format: csv
+  data_root: ../data/music/
+  feature_cols: *amazon_fields
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/music/train.csv
+  valid_data: ../data/music/valid.csv
+  test_data: ../data/music/test.csv
+
+gift_seq:
+  data_format: csv
+  data_root: ../data/gift/
+  feature_cols: [*amazon_fields, *seq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/gift/train_sid.csv
+  valid_data: ../data/gift/valid_sid.csv
+  test_data: ../data/gift/test_sid.csv
+
+game_seq:
+  data_format: csv
+  data_root: ../data/game/
+  feature_cols: [*amazon_fields, *seq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/game/train_sid.csv
+  valid_data: ../data/game/valid_sid.csv
+  test_data: ../data/game/test_sid.csv
+
+music_seq:
+  data_format: csv
+  data_root: ../data/music/
+  feature_cols: [*amazon_fields, *seq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/music/train_sid.csv
+  valid_data: ../data/music/valid_sid.csv
+  test_data: ../data/music/test_sid.csv
+
+gift_sidfeat:
+  data_format: csv
+  data_root: ../data/gift/
+  feature_cols: [*amazon_fields, *sidfeat_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/gift/train_sid.csv
+  valid_data: ../data/gift/valid_sid.csv
+  test_data: ../data/gift/test_sid.csv
+
+game_sidfeat:
+  data_format: csv
+  data_root: ../data/game/
+  feature_cols: [*amazon_fields, *sidfeat_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/game/train_sid.csv
+  valid_data: ../data/game/valid_sid.csv
+  test_data: ../data/game/test_sid.csv
+
+music_sidfeat:
+  data_format: csv
+  data_root: ../data/music/
+  feature_cols: [*amazon_fields, *sidfeat_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/music/train_sid.csv
+  valid_data: ../data/music/valid_sid.csv
+  test_data: ../data/music/test_sid.csv
+
+gift_sid:
+  data_format: csv
+  data_root: ../data/gift/
+  feature_cols: [*amazon_fields, *sidfeat_fields, *sidseq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/gift/train_sid.csv
+  valid_data: ../data/gift/valid_sid.csv
+  test_data: ../data/gift/test_sid.csv
+
+game_sid:
+  data_format: csv
+  data_root: ../data/game/
+  feature_cols: [*amazon_fields, *sidfeat_fields, *sidseq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/game/train_sid.csv
+  valid_data: ../data/game/valid_sid.csv
+  test_data: ../data/game/test_sid.csv
+
+music_sid:
+  data_format: csv
+  data_root: ../data/music/
+  feature_cols: [*amazon_fields, *sidfeat_fields, *sidseq_fields]
+  label_col: {dtype: float, name: rating}
+  min_categr_count: 1
+  train_data: ../data/music/train_sid.csv
+  valid_data: ../data/music/valid_sid.csv
+  test_data: ../data/music/test_sid.csv
