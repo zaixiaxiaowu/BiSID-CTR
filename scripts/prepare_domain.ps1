@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("gift", "game", "music")]
+    [ValidateSet("gift", "game", "music", "ml1m")]
     [string]$Domain,
     [switch]$SkipLlm,
     [switch]$HashEmbed
@@ -20,4 +20,8 @@ $sidArgs = @("data/build_sids.py", "--data_dir", $dataDir)
 if ($HashEmbed) { $sidArgs += "--hash_embed" }
 python @sidArgs
 
-python data/prepare_bisid.py --data_dir $dataDir
+$bisidArgs = @("data/prepare_bisid.py", "--data_dir", $dataDir)
+if ($Domain -eq "ml1m") {
+    $bisidArgs += @("--user_col", "UserID", "--item_col", "MovieID", "--time_col", "Timestamp")
+}
+python @bisidArgs

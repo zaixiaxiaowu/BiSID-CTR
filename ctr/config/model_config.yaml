@@ -278,3 +278,75 @@ BiSIDCTR_game_AID:
   use_cross_attn: true
   use_sid: false
   sparse_optimizer: ftrl
+
+DeepFM_ml1m:
+  dataset_id: ml1m
+  model: DeepFM
+  model_id: DeepFM_ml1m
+  model_root: ./checkpoint/ml1m/DeepFM/
+
+DIN_ml1m:
+  dataset_id: ml1m_seq
+  model: DIN
+  model_id: DIN_ml1m
+  model_root: ./checkpoint/ml1m/DIN/
+  target_field: MovieID
+  sequence_field: item_hist
+  attention_hidden_units: [64]
+  din_use_softmax: true
+
+BST_ml1m:
+  dataset_id: ml1m_seq
+  model: BST
+  model_id: BST_ml1m
+  model_root: ./checkpoint/ml1m/BST/
+  target_field: MovieID
+  sequence_field: item_hist
+  num_heads: 4
+  transformer_layers: 1
+  max_seq_len: 50
+
+TIN_ml1m:
+  dataset_id: ml1m_seq
+  model: TIN
+  model_id: TIN_ml1m
+  model_root: ./checkpoint/ml1m/TIN/
+  target_field: MovieID
+  sequence_field: item_hist
+  max_seq_len: 50
+
+SIDFeat_ml1m:
+  dataset_id: ml1m_sidfeat
+  model: SIDFeat
+  model_id: SIDFeat_ml1m
+  model_root: ./checkpoint/ml1m/SIDFeat/
+
+SIDCTR_ml1m:
+  dataset_id: ml1m_sid
+  model: SIDCTR
+  model_id: SIDCTR_ml1m
+  model_root: ./checkpoint/ml1m/SIDCTR/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 50
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m
+  model_root: ./checkpoint/ml1m/BiSIDCTR/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 50
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  use_sid: true
+  sparse_optimizer: ftrl

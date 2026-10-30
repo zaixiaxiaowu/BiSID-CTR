@@ -10,27 +10,52 @@ USER_PROFILE_PROMPT = (
 
 
 def format_item_metadata(item):
-    parts = [
-        f"title: {item.get('title')}",
-        f"brand/store: {item.get('store')}",
-        f"main_category: {item.get('main_category')}",
-        f"categories: {item.get('categories')}",
-        f"price: {item.get('price')}",
-        f"average_rating: {item.get('average_rating')}",
-        f"features: {item.get('features')}",
-        f"description: {item.get('description')}",
-        f"details: {item.get('details')}",
+    keys = [
+        "title",
+        "genres",
+        "brand/store",
+        "store",
+        "main_category",
+        "categories",
+        "price",
+        "average_rating",
+        "features",
+        "description",
+        "details",
     ]
+    parts = []
+    seen = set()
+    for key in keys:
+        alias = "store" if key == "brand/store" else key
+        if alias in seen:
+            continue
+        value = item.get(alias) if key != "brand/store" else item.get("store")
+        if value is None or value == "" or value == []:
+            continue
+        label = "brand/store" if key in {"brand/store", "store"} else key
+        parts.append(f"{label}: {value}")
+        seen.add(alias)
+    if not parts:
+        return str(item)
     return "\n".join(parts)
 
 
 def format_user_history(history_items, reviews, max_items=20):
     lines = []
     for item, review in list(zip(history_items, reviews))[-max_items:]:
-        title = item.get("title") if item else ""
-        text = (review or {}).get("text") or ""
-        text = " ".join(str(text).split())[:400]
-        lines.append(f"- {title}. review: {text}")
+        title = (item or {}).get("title") or (review or {}).get("title") or ""
+        genres = (item or {}).get("genres") or (item or {}).get("categories") or ""
+        text = " ".join(str((review or {}).get("text") or "").split())[:400]
+        rating = (review or {}).get("rating")
+        bits = [title]
+        if genres:
+            bits.append(f"[{genres}]")
+        if rating not in (None, ""):
+            bits.append(f"rating={rating}")
+        line = "- " + " ".join(str(x) for x in bits if x)
+        if text:
+            line += f". review: {text}"
+        lines.append(line)
     if not lines:
         return "(no history)"
     return "\n".join(lines)

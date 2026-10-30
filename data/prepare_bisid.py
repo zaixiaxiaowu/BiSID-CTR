@@ -49,6 +49,9 @@ def main():
     parser.add_argument("--data_dir", required=True)
     parser.add_argument("--max_len", type=int, default=50)
     parser.add_argument("--n_levels", type=int, default=3)
+    parser.add_argument("--user_col", default="user_id")
+    parser.add_argument("--item_col", default="parent_asin")
+    parser.add_argument("--time_col", default="timestamp")
     args = parser.parse_args()
 
     frames = []
@@ -58,8 +61,8 @@ def main():
         df["split"] = split
         frames.append(df)
     data = pd.concat(frames, ignore_index=True)
-    data["timestamp"] = data["timestamp"].astype("int64")
-    data = data.sort_values("timestamp", kind="mergesort").reset_index(drop=True)
+    data[args.time_col] = data[args.time_col].astype("int64")
+    data = data.sort_values(args.time_col, kind="mergesort").reset_index(drop=True)
 
     item_sids = load_sids(os.path.join(args.data_dir, "item_sids.json"))
     user_sids = load_sids(os.path.join(args.data_dir, "user_sids.json"))
@@ -72,12 +75,11 @@ def main():
 
     records = {split: [] for split in SPLITS}
     for row in tqdm(data.itertuples(index=False), total=len(data), desc="histories"):
-        user_id = row.user_id
-        item_id = row.parent_asin
+        out = row._asdict()
+        user_id = str(out[args.user_col])
+        item_id = str(out[args.item_col])
         item_codes = sid_tuple(item_sids, item_id, n_levels)
         user_codes = sid_tuple(user_sids, user_id, n_levels)
-
-        out = row._asdict()
         out["item_hist"] = join_seq(user_item_hist[user_id], args.max_len)
         out["user_hist"] = join_seq(item_user_hist[item_id], args.max_len)
         for lvl in range(n_levels):

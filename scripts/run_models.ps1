@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("gift", "game", "music")]
+    [ValidateSet("gift", "game", "music", "ml1m")]
     [string]$Domain,
     [int]$Gpu = 0
 )

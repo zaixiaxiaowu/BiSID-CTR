@@ -4,7 +4,7 @@ Bidirectional Semantic ID Sequences for Click-Through Rate Prediction.
 
 This repository starts from the open-source [LLaCTR](https://github.com/istarryn/LLaCTR) pipeline (Amazon Reviews 2023 preprocessing + FuxiCTR training) and adds the BiSID-CTR model: LLM profiling, RQ-KMeans Semantic IDs, bidirectional SID sequences, and target-aware cross-attention.
 
-数据集与 LLaCTR / arXiv:2505.14057 一致：Amazon Reviews 2023 的 Gift Cards、Video Games、Digital Music，评分 ≥ 4 为正样本，按时间戳 8:1:1 划分。
+数据集与 LLaCTR / arXiv:2505.14057 一致，共四个：Amazon Reviews 2023 的 Gift Cards、Video Games、Digital Music（评分 ≥ 4 为正样本），以及 MovieLens-1M（丢掉 rating == 3，>3 为正、<3 为负）。均按时间戳 8:1:1 划分。
 
 ## Method
 
@@ -33,6 +33,14 @@ data/music/meta_Digital_Music.jsonl
 data/music/Digital_Music.jsonl
 ```
 
+Download [MovieLens-1M](https://grouplens.org/datasets/movielens/1m/) and unzip so that these files exist:
+
+```text
+data/ml1m/ml-1m/ratings.dat
+data/ml1m/ml-1m/users.dat
+data/ml1m/ml-1m/movies.dat
+```
+
 ## Data pipeline
 
 The first step is LLaCTR's processor (Windows-safe rewrite of `process.py`). Later steps add BiSID features.
@@ -59,6 +67,20 @@ python data/prepare_bisid.py --data_dir data/gift
 
 Or use `scripts/prepare_domain.ps1 -Domain gift -SkipLlm -HashEmbed`.
 
+MovieLens-1M uses `UserID` / `MovieID` / `Timestamp` instead of Amazon's `user_id` / `parent_asin` / `timestamp`:
+
+```powershell
+cd data/ml1m
+python process.py
+
+cd ../..
+python data/build_profiles.py --data_dir data/ml1m
+python data/build_sids.py --data_dir data/ml1m
+python data/prepare_bisid.py --data_dir data/ml1m --user_col UserID --item_col MovieID --time_col Timestamp
+```
+
+Or `scripts/prepare_domain.ps1 -Domain ml1m`.
+
 Environment variables for the official setting:
 
 | Variable | Default | Meaning |
@@ -82,7 +104,7 @@ python run_expid.py --config ./config --expid SIDCTR_gift --gpu 0
 python run_expid.py --config ./config --expid BiSIDCTR_gift --gpu 0
 ```
 
-Replace `gift` with `game` or `music`. Paper defaults: batch size 1024, lr 0.001, hidden size 128, 4 attention heads, sequence length 50, SID length 3, patience 10, Adam (dense) + FTRL (sparse).
+Replace `gift` with `game`, `music`, or `ml1m`. Paper defaults: batch size 1024, lr 0.001, hidden size 128, 4 attention heads, sequence length 50, SID length 3, patience 10, Adam (dense) + FTRL (sparse).
 
 Ablations on Video Games:
 
@@ -96,7 +118,7 @@ python run_expid.py --config ./config --expid BiSIDCTR_game_AID --gpu 0
 ## Layout
 
 ```text
-data/           Amazon preprocess (LLaCTR) + SID/sequence construction
+data/           LLaCTR preprocess (Amazon + MovieLens-1M) + SID/sequence construction
 sid/            LLM client, prompts, RQ-KMeans
 ctr/fuxictr/    FuxiCTR v1 from LLaCTR, plus DIN/BST/TIN/SID-Feat/SID-CTR/BiSID-CTR
 ctr/config/     dataset and model configs

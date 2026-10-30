@@ -34,6 +34,29 @@ sidseq_fields: &sidseq_fields
   - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid2}
   - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid3}
 
+ml1m_fields: &ml1m_fields
+  - {active: true, dtype: str, name: UserID, type: categorical}
+  - {active: true, dtype: str, name: Gender, type: categorical}
+  - {active: true, dtype: str, name: Age, type: categorical}
+  - {active: true, dtype: str, name: Occupation, type: categorical}
+  - {active: true, dtype: str, name: MovieID, type: categorical}
+  - {active: true, dtype: str, name: Title, type: categorical}
+  - {active: true, dtype: str, name: Genres, type: categorical}
+  - {active: true, dtype: str, name: Timestamp, type: categorical}
+
+ml1m_seq_fields: &ml1m_seq_fields
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: MovieID}
+
+ml1m_sidseq_fields: &ml1m_sidseq_fields
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: MovieID}
+  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: UserID}
+  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid1}
+  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid2}
+  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid3}
+  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid1}
+  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid2}
+  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid3}
+
 gift:
   data_format: csv
   data_root: ../data/gift/
@@ -153,3 +176,43 @@ music_sid:
   train_data: ../data/music/train_sid.csv
   valid_data: ../data/music/valid_sid.csv
   test_data: ../data/music/test_sid.csv
+
+ml1m:
+  data_format: csv
+  data_root: ../data/ml1m/
+  feature_cols: *ml1m_fields
+  label_col: {dtype: float, name: Rating}
+  min_categr_count: 1
+  train_data: ../data/ml1m/train.csv
+  valid_data: ../data/ml1m/valid.csv
+  test_data: ../data/ml1m/test.csv
+
+ml1m_seq:
+  data_format: csv
+  data_root: ../data/ml1m/
+  feature_cols: [*ml1m_fields, *ml1m_seq_fields]
+  label_col: {dtype: float, name: Rating}
+  min_categr_count: 1
+  train_data: ../data/ml1m/train_sid.csv
+  valid_data: ../data/ml1m/valid_sid.csv
+  test_data: ../data/ml1m/test_sid.csv
+
+ml1m_sidfeat:
+  data_format: csv
+  data_root: ../data/ml1m/
+  feature_cols: [*ml1m_fields, *sidfeat_fields]
+  label_col: {dtype: float, name: Rating}
+  min_categr_count: 1
+  train_data: ../data/ml1m/train_sid.csv
+  valid_data: ../data/ml1m/valid_sid.csv
+  test_data: ../data/ml1m/test_sid.csv
+
+ml1m_sid:
+  data_format: csv
+  data_root: ../data/ml1m/
+  feature_cols: [*ml1m_fields, *sidfeat_fields, *ml1m_sidseq_fields]
+  label_col: {dtype: float, name: Rating}
+  min_categr_count: 1
+  train_data: ../data/ml1m/train_sid.csv
+  valid_data: ../data/ml1m/valid_sid.csv
+  test_data: ../data/ml1m/test_sid.csv

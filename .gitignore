@@ -31,6 +31,8 @@ data/*/meta_*.jsonl
 data/*/Gift_Cards.jsonl
 data/*/Video_Games.jsonl
 data/*/Digital_Music.jsonl
+data/ml1m/ml-1m/
+data/ml1m/*.dat
 data/*/instruction/
 .DS_Store
 Thumbs.db
