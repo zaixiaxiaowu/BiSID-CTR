@@ -31,10 +31,11 @@ class BiSIDCTR(BaseModel):
         hidden_activations="ReLU",
         num_heads=4,
         n_levels=3,
-        max_seq_len=50,
+        max_seq_len=20,
         use_user_side=True,
         use_item_side=True,
         use_cross_attn=True,
+        keep_pooled=True,
         use_sid=True,
         user_field="user_id",
         item_field="parent_asin",
@@ -55,6 +56,7 @@ class BiSIDCTR(BaseModel):
         self.use_user_side = use_user_side
         self.use_item_side = use_item_side
         self.use_cross_attn = use_cross_attn
+        self.keep_pooled = keep_pooled
         self.use_sid = use_sid
         self.n_levels = n_levels
         self.user_field = user_field
@@ -102,10 +104,12 @@ class BiSIDCTR(BaseModel):
             batch_norm=batch_norm,
         )
         pred_in = hidden_units[-1] + attention_dim
-        if use_user_side:
+        if use_user_side and keep_pooled:
             pred_in += attention_dim
-        if use_item_side:
+        if use_item_side and keep_pooled:
             pred_in += attention_dim
+        if use_user_side and use_item_side and use_cross_attn:
+            pred_in += attention_dim * 2
         self.pred_mlp = DNN_Layer(
             input_dim=pred_in,
             output_dim=1,
@@ -143,22 +147,23 @@ class BiSIDCTR(BaseModel):
 
         pieces = [h_ctr, query]
         item_seq = user_seq = item_mask = user_mask = None
+        h_pref = h_aud = None
         if self.use_user_side:
             item_seq = self.item_seq_encoder(self._sid_or_id_seq(emb_dict, self.item_hist_fields))
             item_mask = sequence_mask(X, self._feature_map, self.item_hist_fields[0])
             h_pref = self.user_side_attn(query, item_seq, item_mask)
+            if self.keep_pooled:
+                pieces.append(h_pref)
         if self.use_item_side:
             user_seq = self.user_seq_encoder(self._sid_or_id_seq(emb_dict, self.user_hist_fields))
             user_mask = sequence_mask(X, self._feature_map, self.user_hist_fields[0])
             h_aud = self.item_side_attn(query, user_seq, user_mask)
+            if self.keep_pooled:
+                pieces.append(h_aud)
 
         if self.use_user_side and self.use_item_side and self.use_cross_attn:
-            h_pref = self.cross_item_attn(h_pref, user_seq, user_mask)
-            h_aud = self.cross_user_attn(h_aud, item_seq, item_mask)
-        if self.use_user_side:
-            pieces.append(h_pref)
-        if self.use_item_side:
-            pieces.append(h_aud)
+            pieces.append(self.cross_item_attn(h_pref, user_seq, user_mask))
+            pieces.append(self.cross_user_attn(h_aud, item_seq, item_mask))
 
         y_pred = self.pred_mlp(torch.cat(pieces, dim=-1)) + fm_logit
         if self.final_activation is not None:

@@ -1,6 +1,7 @@
 """Amazon Reviews 2023 CTR preprocessing, following LLaCTR (arxiv:2505.14057).
 
-Rating >= 4 is positive. Interactions are sorted by timestamp and split 8:1:1.
+Expect the official 5-core jsonl dumps. Rating >= 4 is positive.
+Interactions are sorted by timestamp and split 8:1:1.
 This script also dumps item metadata and review text for offline SID construction.
 """
 from __future__ import annotations

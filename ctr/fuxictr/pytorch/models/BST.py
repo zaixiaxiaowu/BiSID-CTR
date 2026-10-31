@@ -20,7 +20,7 @@ class BST(BaseModel):
         hidden_activations="ReLU",
         num_heads=4,
         transformer_layers=1,
-        max_seq_len=50,
+        max_seq_len=20,
         target_field="parent_asin",
         sequence_field="item_hist",
         net_dropout=0,

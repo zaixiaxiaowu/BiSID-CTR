@@ -20,7 +20,7 @@ $sidArgs = @("data/build_sids.py", "--data_dir", $dataDir)
 if ($HashEmbed) { $sidArgs += "--hash_embed" }
 python @sidArgs
 
-$bisidArgs = @("data/prepare_bisid.py", "--data_dir", $dataDir)
+$bisidArgs = @("data/prepare_bisid.py", "--data_dir", $dataDir, "--max_len", "20")
 if ($Domain -eq "ml1m") {
     $bisidArgs += @("--user_col", "UserID", "--item_col", "MovieID", "--time_col", "Timestamp")
 }

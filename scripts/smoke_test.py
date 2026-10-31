@@ -98,6 +98,12 @@ def main():
     out["loss"].backward()
     print("BiSIDCTR smoke ok", float(out["loss"]))
 
+    replace = BiSIDCTR(fm, keep_pooled=False, **params)
+    out = replace.forward((X, y))
+    assert out["y_pred"].shape == (batch, 1), out["y_pred"].shape
+    out["loss"].backward()
+    print("BiSIDCTR -TA smoke ok", float(out["loss"]))
+
     din_fm = FeatureMap("gift_seq")
     idx = 0
     for name in cats[:13]:

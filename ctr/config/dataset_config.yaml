@@ -14,7 +14,7 @@ amazon_fields: &amazon_fields
   - {active: true, dtype: str, name: details, type: categorical}
 
 seq_fields: &seq_fields
-  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: parent_asin}
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: parent_asin}
 
 sidfeat_fields: &sidfeat_fields
   - {active: true, dtype: str, name: item_sid1, type: categorical}
@@ -25,14 +25,14 @@ sidfeat_fields: &sidfeat_fields
   - {active: true, dtype: str, name: user_sid3, type: categorical}
 
 sidseq_fields: &sidseq_fields
-  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: parent_asin}
-  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_id}
-  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid1}
-  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid2}
-  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid3}
-  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid1}
-  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid2}
-  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid3}
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: parent_asin}
+  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_id}
+  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid1}
+  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid2}
+  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid3}
+  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid1}
+  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid2}
+  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid3}
 
 ml1m_fields: &ml1m_fields
   - {active: true, dtype: str, name: UserID, type: categorical}
@@ -45,17 +45,17 @@ ml1m_fields: &ml1m_fields
   - {active: true, dtype: str, name: Timestamp, type: categorical}
 
 ml1m_seq_fields: &ml1m_seq_fields
-  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: MovieID}
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: MovieID}
 
 ml1m_sidseq_fields: &ml1m_sidseq_fields
-  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: MovieID}
-  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: UserID}
-  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid1}
-  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid2}
-  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: item_sid3}
-  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid1}
-  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid2}
-  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 50, padding: pre, encoder: none, share_embedding: user_sid3}
+  - {active: true, dtype: str, name: item_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: MovieID}
+  - {active: true, dtype: str, name: user_hist, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: UserID}
+  - {active: true, dtype: str, name: item_hist_sid1, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid1}
+  - {active: true, dtype: str, name: item_hist_sid2, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid2}
+  - {active: true, dtype: str, name: item_hist_sid3, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: item_sid3}
+  - {active: true, dtype: str, name: user_hist_sid1, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid1}
+  - {active: true, dtype: str, name: user_hist_sid2, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid2}
+  - {active: true, dtype: str, name: user_hist_sid3, type: sequence, splitter: "^", max_len: 20, padding: pre, encoder: none, share_embedding: user_sid3}
 
 gift:
   data_format: csv

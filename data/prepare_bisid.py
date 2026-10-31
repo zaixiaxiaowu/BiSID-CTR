@@ -47,7 +47,7 @@ def sid_tuple(mapping, key, n_levels):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", required=True)
-    parser.add_argument("--max_len", type=int, default=50)
+    parser.add_argument("--max_len", type=int, default=20)
     parser.add_argument("--n_levels", type=int, default=3)
     parser.add_argument("--user_col", default="user_id")
     parser.add_argument("--item_col", default="parent_asin")

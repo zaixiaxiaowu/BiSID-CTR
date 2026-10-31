@@ -22,7 +22,7 @@ class TIN(BaseModel):
         hidden_units=(128, 128),
         hidden_activations="ReLU",
         attention_hidden_units=(64,),
-        max_seq_len=50,
+        max_seq_len=20,
         target_field="parent_asin",
         sequence_field="item_hist",
         net_dropout=0,

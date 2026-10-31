@@ -82,7 +82,7 @@ BST_gift:
   model_root: ./checkpoint/gift/BST/
   num_heads: 4
   transformer_layers: 1
-  max_seq_len: 50
+  max_seq_len: 20
 
 BST_game:
   dataset_id: game_seq
@@ -91,7 +91,7 @@ BST_game:
   model_root: ./checkpoint/game/BST/
   num_heads: 4
   transformer_layers: 1
-  max_seq_len: 50
+  max_seq_len: 20
 
 BST_music:
   dataset_id: music_seq
@@ -100,28 +100,28 @@ BST_music:
   model_root: ./checkpoint/music/BST/
   num_heads: 4
   transformer_layers: 1
-  max_seq_len: 50
+  max_seq_len: 20
 
 TIN_gift:
   dataset_id: gift_seq
   model: TIN
   model_id: TIN_gift
   model_root: ./checkpoint/gift/TIN/
-  max_seq_len: 50
+  max_seq_len: 20
 
 TIN_game:
   dataset_id: game_seq
   model: TIN
   model_id: TIN_game
   model_root: ./checkpoint/game/TIN/
-  max_seq_len: 50
+  max_seq_len: 20
 
 TIN_music:
   dataset_id: music_seq
   model: TIN
   model_id: TIN_music
   model_root: ./checkpoint/music/TIN/
-  max_seq_len: 50
+  max_seq_len: 20
 
 SIDFeat_gift:
   dataset_id: gift_sidfeat
@@ -149,7 +149,7 @@ SIDCTR_gift:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   sparse_optimizer: ftrl
 
 SIDCTR_game:
@@ -160,7 +160,7 @@ SIDCTR_game:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   sparse_optimizer: ftrl
 
 SIDCTR_music:
@@ -171,7 +171,7 @@ SIDCTR_music:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   sparse_optimizer: ftrl
 
 BiSIDCTR_gift:
@@ -182,10 +182,11 @@ BiSIDCTR_gift:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   use_user_side: true
   use_item_side: true
   use_cross_attn: true
+  keep_pooled: true
   use_sid: true
   sparse_optimizer: ftrl
 
@@ -197,10 +198,11 @@ BiSIDCTR_game:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   use_user_side: true
   use_item_side: true
   use_cross_attn: true
+  keep_pooled: true
   use_sid: true
   sparse_optimizer: ftrl
 
@@ -212,71 +214,12 @@ BiSIDCTR_music:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   use_user_side: true
   use_item_side: true
   use_cross_attn: true
+  keep_pooled: true
   use_sid: true
-  sparse_optimizer: ftrl
-
-BiSIDCTR_game_woUS:
-  dataset_id: game_sid
-  model: BiSIDCTR
-  model_id: BiSIDCTR_game_woUS
-  model_root: ./checkpoint/game/ablation/
-  attention_dim: 128
-  num_heads: 4
-  n_levels: 3
-  max_seq_len: 50
-  use_user_side: true
-  use_item_side: false
-  use_cross_attn: false
-  use_sid: true
-  sparse_optimizer: ftrl
-
-BiSIDCTR_game_woIS:
-  dataset_id: game_sid
-  model: BiSIDCTR
-  model_id: BiSIDCTR_game_woIS
-  model_root: ./checkpoint/game/ablation/
-  attention_dim: 128
-  num_heads: 4
-  n_levels: 3
-  max_seq_len: 50
-  use_user_side: false
-  use_item_side: true
-  use_cross_attn: false
-  use_sid: true
-  sparse_optimizer: ftrl
-
-BiSIDCTR_game_woXA:
-  dataset_id: game_sid
-  model: BiSIDCTR
-  model_id: BiSIDCTR_game_woXA
-  model_root: ./checkpoint/game/ablation/
-  attention_dim: 128
-  num_heads: 4
-  n_levels: 3
-  max_seq_len: 50
-  use_user_side: true
-  use_item_side: true
-  use_cross_attn: false
-  use_sid: true
-  sparse_optimizer: ftrl
-
-BiSIDCTR_game_AID:
-  dataset_id: game_sid
-  model: BiSIDCTR
-  model_id: BiSIDCTR_game_AID
-  model_root: ./checkpoint/game/ablation/
-  attention_dim: 128
-  num_heads: 4
-  n_levels: 3
-  max_seq_len: 50
-  use_user_side: true
-  use_item_side: true
-  use_cross_attn: true
-  use_sid: false
   sparse_optimizer: ftrl
 
 DeepFM_ml1m:
@@ -304,7 +247,7 @@ BST_ml1m:
   sequence_field: item_hist
   num_heads: 4
   transformer_layers: 1
-  max_seq_len: 50
+  max_seq_len: 20
 
 TIN_ml1m:
   dataset_id: ml1m_seq
@@ -313,7 +256,7 @@ TIN_ml1m:
   model_root: ./checkpoint/ml1m/TIN/
   target_field: MovieID
   sequence_field: item_hist
-  max_seq_len: 50
+  max_seq_len: 20
 
 SIDFeat_ml1m:
   dataset_id: ml1m_sidfeat
@@ -331,7 +274,7 @@ SIDCTR_ml1m:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   sparse_optimizer: ftrl
 
 BiSIDCTR_ml1m:
@@ -344,9 +287,344 @@ BiSIDCTR_ml1m:
   attention_dim: 128
   num_heads: 4
   n_levels: 3
-  max_seq_len: 50
+  max_seq_len: 20
   use_user_side: true
   use_item_side: true
   use_cross_attn: true
+  keep_pooled: true
   use_sid: true
   sparse_optimizer: ftrl
+
+# Ablations: Full keeps h^I, h^U, tilde h^I, tilde h^U.
+# -US / -IS drop one sequence; -XA drops cross; -TA keeps only cross outputs;
+# AID replaces SIDs with atomic IDs.
+BiSIDCTR_gift_woUS:
+  dataset_id: gift_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_gift_woUS
+  model_root: ./checkpoint/gift/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: false
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_gift_woIS:
+  dataset_id: gift_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_gift_woIS
+  model_root: ./checkpoint/gift/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: false
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_gift_woXA:
+  dataset_id: gift_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_gift_woXA
+  model_root: ./checkpoint/gift/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_gift_woTA:
+  dataset_id: gift_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_gift_woTA
+  model_root: ./checkpoint/gift/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: false
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_gift_AID:
+  dataset_id: gift_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_gift_AID
+  model_root: ./checkpoint/gift/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: true
+  use_sid: false
+  sparse_optimizer: ftrl
+
+BiSIDCTR_game_woUS:
+  dataset_id: game_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_game_woUS
+  model_root: ./checkpoint/game/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: false
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_game_woIS:
+  dataset_id: game_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_game_woIS
+  model_root: ./checkpoint/game/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: false
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_game_woXA:
+  dataset_id: game_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_game_woXA
+  model_root: ./checkpoint/game/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_game_woTA:
+  dataset_id: game_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_game_woTA
+  model_root: ./checkpoint/game/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: false
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_game_AID:
+  dataset_id: game_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_game_AID
+  model_root: ./checkpoint/game/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: true
+  use_sid: false
+  sparse_optimizer: ftrl
+
+BiSIDCTR_music_woUS:
+  dataset_id: music_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_music_woUS
+  model_root: ./checkpoint/music/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: false
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_music_woIS:
+  dataset_id: music_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_music_woIS
+  model_root: ./checkpoint/music/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: false
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_music_woXA:
+  dataset_id: music_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_music_woXA
+  model_root: ./checkpoint/music/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_music_woTA:
+  dataset_id: music_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_music_woTA
+  model_root: ./checkpoint/music/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: false
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_music_AID:
+  dataset_id: music_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_music_AID
+  model_root: ./checkpoint/music/ablation/
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: true
+  use_sid: false
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m_woUS:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m_woUS
+  model_root: ./checkpoint/ml1m/ablation/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: false
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m_woIS:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m_woIS
+  model_root: ./checkpoint/ml1m/ablation/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: false
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m_woXA:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m_woXA
+  model_root: ./checkpoint/ml1m/ablation/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: false
+  keep_pooled: true
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m_woTA:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m_woTA
+  model_root: ./checkpoint/ml1m/ablation/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: false
+  use_sid: true
+  sparse_optimizer: ftrl
+
+BiSIDCTR_ml1m_AID:
+  dataset_id: ml1m_sid
+  model: BiSIDCTR
+  model_id: BiSIDCTR_ml1m_AID
+  model_root: ./checkpoint/ml1m/ablation/
+  user_field: UserID
+  item_field: MovieID
+  attention_dim: 128
+  num_heads: 4
+  n_levels: 3
+  max_seq_len: 20
+  use_user_side: true
+  use_item_side: true
+  use_cross_attn: true
+  keep_pooled: true
+  use_sid: false
+  sparse_optimizer: ftrl
+
